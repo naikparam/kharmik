@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Worker</title>
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn-success {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: scale(1.03);
+        }
+
+        .btn-secondary {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+   <!-- Add this inside the <body> tag, just above the form -->
+<div class="container">
+    <!-- Success Alert (Initially Hidden) -->
+    <div id="successMessage" class="alert alert-success alert-dismissible fade show" role="alert" style="display: none;">
+        Worker added successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <h2>Add Worker</h2>
+    
+    <form method="POST" enctype="multipart/form-data" id="workerForm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="aadhar" class="form-label">Aadhar Number</label>
+            <input type="text" class="form-control" id="aadhar" name="aadhar"  placeholder="Enter 12-digit Aadhar Number" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" pattern="[0-9]{10}" maxlength="10" placeholder="Enter 10-digit Phone Number" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter Full Name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="father_name" class="form-label">Father's Name</label>
+            <input type="text" class="form-control" id="father_name" name="father_name" placeholder="Enter Father's Name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="job_type" class="form-label">Job Type</label>
+            <input type="text" class="form-control" id="job_type" name="job_type" placeholder="Enter Job Type" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+
+        <button type="submit" class="btn btn-success">Add Worker</button>
+    </form>
+
+    <a href="{% url 'workerlisturl' %}" class="btn btn-secondary">Back to Worker List</a>
+    <div class="signup-link">
+        <p>New to Kharmik? <a href="{% url 'mainpageurl' %}">Return to Main Page</a></p>
+    </div>
+</div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JavaScript for Showing Popup Message -->
+<script>
+    document.getElementById("workerForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent actual form submission
+
+        // Show the success message
+        document.getElementById("successMessage").style.display = "block";
+
+        // Hide the success message after 3 seconds
+        setTimeout(function() {
+            document.getElementById("successMessage").style.display = "none";
+        }, 3000);
+
+        // Optionally, submit the form after showing the alert
+        setTimeout(function() {
+            document.getElementById("workerForm").submit();
+        }, 1000);
+    });
+</script>
+
+
+</body>
+</html>

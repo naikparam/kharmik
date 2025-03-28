@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kharmik - Gaming Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #0a0a1a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .header {
+            position: absolute;
+            top: 40px;
+            color: transparent;
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            background: linear-gradient(135deg, #ff00cc, #3333ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 0, 204, 0.5), 0 0 30px rgba(51, 51, 255, 0.3);
+            animation: fadeInDown 1s ease-out, glow 3s ease-in-out infinite alternate;
+            transform-style: preserve-3d;
+            transform: translateZ(40px);
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 204, 0.5), 0 0 30px rgba(51, 51, 255, 0.3); }
+            to { text-shadow: 0 0 40px rgba(255, 0, 204, 0.8), 0 0 50px rgba(51, 51, 255, 0.6); }
+        }
+
+        .login-container {
+            background: rgba(30, 30, 60, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 3rem 4rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(102, 0, 255, 0.5),
+                        inset 0 0 15px rgba(51, 153, 255, 0.5);
+            width: 90%;
+            max-width: 450px;
+            animation: fadeIn 1s ease-out, float 6s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(102, 204, 255, 0.3);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateX(3deg) rotateY(3deg); }
+            100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #33ccff, #ff33cc, transparent);
+            animation: loading 3s linear infinite;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        h2 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(51, 204, 255, 0.7);
+            transform: translateZ(20px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(10px);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #33ccff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateZ(5px);
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(51, 204, 255, 0.5);
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(51, 204, 255, 0.3);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(10, 10, 40, 0.6);
+            color: white;
+            box-shadow: 0 0 10px rgba(51, 204, 255, 0.2);
+        }
+
+        input:focus {
+            border-color: #33ccff;
+            box-shadow: 0 0 15px rgba(51, 204, 255, 0.5);
+            outline: none;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .error-message {
+            color: #ff3366;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(255, 51, 102, 0.5);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #6600ff, #33ccff);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            transform: translateZ(15px);
+            box-shadow: 0 5px 15px rgba(102, 0, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px) translateZ(15px);
+            box-shadow: 0 10px 25px rgba(102, 0, 255, 0.5);
+        }
+
+        .submit-btn:hover::before {
+            animation: shine 1s forwards;
+        }
+
+        @keyframes shine {
+            0% { opacity: 0; left: -50%; }
+            50% { opacity: 1; }
+            100% { opacity: 0; left: 150%; }
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #ccccff;
+            transform: translateZ(5px);
+        }
+
+        .signup-link a {
+            color: #ff33cc;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px rgba(255, 51, 204, 0.5);
+        }
+
+        .signup-link a:hover {
+            color: #33ccff;
+            text-shadow: 0 0 10px rgba(51, 204, 255, 0.8);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cube {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            transform-style: preserve-3d;
+            animation: rotate 15s linear infinite;
+        }
+
+        .cube1 {
+            top: 15%;
+            left: 10%;
+        }
+
+        .cube2 {
+            bottom: 15%;
+            right: 10%;
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(51, 204, 255, 0.5);
+            opacity: 0.6;
+        }
+
+        .face-front { transform: translateZ(40px); }
+        .face-back { transform: rotateY(180deg) translateZ(40px); }
+        .face-right { transform: rotateY(90deg) translateZ(40px); }
+        .face-left { transform: rotateY(-90deg) translateZ(40px); }
+        .face-top { transform: rotateX(90deg) translateZ(40px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(40px); }
+
+        @media (max-width: 480px) {
+            .header {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+
+            .login-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars-container" id="stars"></div>
+    
+    <div class="cube cube1">
+        <div class="cube-face face-front"></div>
+        <div class="cube-face face-back"></div>
+        <div class="cube-face face-right"></div>
+        <div class="cube-face face-left"></div>
+        <div class="cube-face face-top"></div>
+        <div class="cube-face face-bottom"></div>
+    </div>
+    
+    <div class="cube cube2">
+        <div class="cube-face face-front"></div>
+        <div class="cube-face face-back"></div>
+        <div class="cube-face face-right"></div>
+        <div class="cube-face face-left"></div>
+        <div class="cube-face face-top"></div>
+        <div class="cube-face face-bottom"></div>
+    </div>
+    
+    <div class="header">Kharmik</div>
+    <div class="login-container">
+        <h2>Enter the Game</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+
+            <button type="submit" class="submit-btn">
+                Login to Play
+            </button>
+        </form>
+
+        <div class="signup-link">
+            <p>New to Kharmik? <a href="{% url 'mainpageurl' %}">Return to Main Page</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Create animated starfield
+        const starsContainer = document.getElementById('stars');
+        const starsCount = 200;
+        
+        for (let i = 0; i < starsCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random position
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            // Random size
+            const size = Math.random() * 3;
+            
+            // Random animation duration and delay
+            const duration = 3 + Math.random() * 5;
+            const delay = Math.random() * 5;
+            
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.animationDuration = `${duration}s`;
+            star.style.animationDelay = `${delay}s`;
+            
+            starsContainer.appendChild(star);
+        }
+        
+        // 3D effect on mouse movement
+        document.addEventListener('mousemove', (e) => {
+            const loginContainer = document.querySelector('.login-container');
+            const header = document.querySelector('.header');
+            
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Calculate rotation based on mouse position
+            const rotateY = -5 + (e.clientX / windowWidth * 10);
+            const rotateX = 5 - (e.clientY / windowHeight * 10);
+            
+            // Apply rotation and keep the float animation
+            loginContainer.style.animation = 'none';
+            loginContainer.style.transform = `translateY(-${e.clientY / windowHeight * 10}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            
+            // Apply subtle movement to header
+            header.style.transform = `translateZ(40px) rotateX(${rotateX*0.3}deg) rotateY(${rotateY*0.3}deg)`;
+        });
+        
+        // Reset animations when mouse leaves
+        document.addEventListener('mouseleave', () => {
+            const loginContainer = document.querySelector('.login-container');
+            const header = document.querySelector('.header');
+            
+            loginContainer.style.animation = 'fadeIn 1s ease-out, float 6s ease-in-out infinite';
+            loginContainer.style.transform = '';
+            
+            header.style.transform = 'translateZ(40px)';
+        });
+    </script>
+</body>
+</html>

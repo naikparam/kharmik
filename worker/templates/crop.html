@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enter Crop Information</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        h1 {
+            color: #2d3436;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: fadeDown 0.6s ease-out;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeUp 0.6s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3436;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input:focus {
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.1);
+            outline: none;
+        }
+
+        input[type="date"] {
+            color: #2d3436;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(45deg, #6c5ce7, #a8e6cf);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .error-message {
+            background: #ff7675;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes fadeDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Floating labels effect */
+        .form-group {
+            position: relative;
+            padding-top: 13px;
+        }
+
+        .form-group label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Enter Crop Information</h1>
+    
+    <div class="form-container">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="farmer_aadhar">Farmer Aadhar</label>
+                <input 
+                    type="text" 
+                    name="farmer_aadhar" 
+                    id="farmer_aadhar" 
+                    required
+                    placeholder="Enter farmer's Aadhar number"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="worker_aadhar">Worker Aadhar</label>
+                <input 
+                    type="text" 
+                    name="worker_aadhar" 
+                    id="worker_aadhar" 
+                    required
+                    placeholder="Enter worker's Aadhar number"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="crop_name">Crop Name</label>
+                <input 
+                    type="text" 
+                    name="crop_name" 
+                    id="crop_name" 
+                    required
+                    placeholder="Enter crop name"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="working_date">Working Date</label>
+                <input 
+                    type="date" 
+                    name="working_date" 
+                    id="working_date" 
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="per_day_price">Per Day Price</label>
+                <input 
+                    type="number" 
+                    name="per_day_price" 
+                    id="per_day_price" 
+                    step="0.01" 
+                    required
+                    placeholder="Enter per day price"
+                >
+            </div>
+
+            <button type="submit">Submit Information</button>
+        </form>
+
+        {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+        {% endif %}
+        <div class="signup-link">
+            <p>New to Kharmik? <a href="{% url 'mainpageurl' %}">Return to Main Page</a></p>
+        </div>
+    </div>
+</body>
+</html>

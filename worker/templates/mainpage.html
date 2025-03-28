@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHarmik</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #27ae60;
+            --accent-color: #e74c3c;
+            --neon-blue: #00FFFF;
+            --dark-bg: #0f0f1a;
+        }
+
+        body {
+            background: url('/api/placeholder/1600/900') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(246, 249, 252, 0.85) 0%, rgba(237, 242, 247, 0.9) 100%);
+            z-index: -1;
+        }
+
+        .navbar {
+            background: var(--primary-color) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(39, 174, 96, 0.3);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(39, 174, 96, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white !important;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+        }
+
+        .hero-section {
+            padding: 2rem 0;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .section-wrapper {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 0 15px rgba(39, 174, 96, 0.2);
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 1rem;
+            border: 1px solid rgba(39, 174, 96, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 0 20px rgba(39, 174, 96, 0.3);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(39, 174, 96, 0.5);
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(39, 174, 96, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+            width: 24px;
+            display: inline-block;
+        }
+
+        .section-row {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            perspective: 1000px;
+        }
+
+        .content-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: auto;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(39, 174, 96, 0.3);
+        }
+
+        .copyright {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatAnimation {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .row {
+            transform-style: preserve-3d;
+        }
+
+        .col-md-4, .col-md-6 {
+            transform: translateZ(0);
+            transition: transform 0.5s ease;
+        }
+
+        @media (min-width: 992px) {
+            .row:hover .col-md-4:hover,
+            .row:hover .col-md-6:hover {
+                transform: translateZ(30px);
+            }
+            
+            .row:hover .col-md-4:not(:hover),
+            .row:hover .col-md-6:not(:hover) {
+                transform: translateZ(10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-card {
+                margin: 1rem 0;
+            }
+            
+            .content-wrapper {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">🌾 KHarmik</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger" href="{% url 'logouturl' %}">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="btn btn-success" href="{% url 'loginpageurl' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="hero-section">
+            <h2 class="animate__animated animate__fadeInDown">Welcome to KHarmik</h2>
+            <p class="animate__animated animate__fadeInUp">Your comprehensive solution for agricultural management</p>
+            
+            <!-- Reports Section -->
+            <div class="section-row">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="section-card">
+                            <h3 class="section-title">Reports Access</h3>
+                            <div class="btn-container">
+                                <a href="{% url 'farmer-worker-report' %}" class="btn btn-primary">
+                                    <span class="feature-icon">📈</span>Farmer Report
+                                </a>
+                                <a href="{% url 'countofworker' %}" class="btn btn-info">
+                                    <span class="feature-icon">📊</span>Worker Report
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if user.is_superuser or user.is_staff %}
+            <!-- Management Sections -->
+            <div class="section-row">
+                <div class="row g-4">
+                    <!-- Farmer Section -->
+                    <div class="col-md-4">
+                        <div class="section-card">
+                            <h3 class="section-title">Farmer Management</h3>
+                            <div class="btn-container">
+                                <a href="{% url 'farmerrigistationurl' %}" class="btn btn-primary">
+                                    <span class="feature-icon">👨‍🌾</span>Farmer Registration
+                                </a>
+                                <a href="{% url 'farmerlisturl' %}" class="btn btn-secondary">
+                                    <span class="feature-icon">📋</span>Farmer List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Worker Section -->
+                    <div class="col-md-4">
+                        <div class="section-card">
+                            <h3 class="section-title">Worker Management</h3>
+                            <div class="btn-container">
+                                <a href="{% url 'workerregistationurl' %}" class="btn btn-info">
+                                    <span class="feature-icon">👷</span>Worker Registration
+                                </a>
+                                <a href="{% url 'workerlisturl' %}" class="btn btn-light">
+                                    <span class="feature-icon">📋</span>Worker List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculations Section -->
+                    <div class="col-md-4">
+                        <div class="section-card">
+                            <h3 class="section-title">Calculations</h3>
+                            <div class="btn-container">
+                                <a href="{% url 'workingdetails' %}" class="btn btn-danger">
+                                    <span class="feature-icon">📊</span>Worker Calculation
+                                </a>
+                                <a href="{% url 'farmer-worker-report2' %}" class="btn btn-danger">
+                                    <span class="feature-icon">📊</span>Farmer Calculation
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crop Management Section -->
+            <div class="section-row">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="section-card">
+                            <h3 class="section-title">Crop Management</h3>
+                            <div class="btn-container">
+                                <a href="{% url 'cropurl' %}" class="btn btn-warning">
+                                    <span class="feature-icon">🌾</span>Crop Registration
+                                </a>
+                                <a href="{% url 'croplisturl' %}" class="btn btn-warning">
+                                    <span class="feature-icon">🌾</span>Crop List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="copyright">© 2025 KHarmik. All rights reserved. Developed by Paramajyothi Naik</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add 3D hover effect for cards
+        document.querySelectorAll('.section-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                this.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
